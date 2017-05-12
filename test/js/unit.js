@@ -4,6 +4,7 @@ const fs = require('fs');
 const path = require('path');
 const testJsonFile = path.join(__dirname, '../../server/db/games.test.json');
 const expect = require('expect');
+const sinon = require('sinon');
 
 describe('db unit tests', () => {
   // Mocha runs the "before" function once, before any tests are executed.
@@ -37,31 +38,59 @@ describe('db unit tests', () => {
 
     // TODO: Finish unit testing the create function
 
-    xit('game has unique ID field added', () => {
+    it('game has unique ID field added', () => {
+      const game1 = { winner: 'X' };
+      const game2 = { winner: 'X' };
+      db.create(game1);
+      db.create(game2);
+      const gameList = JSON.parse(fs.readFileSync(testJsonFile));
+
+      expect(gameList[0].id).toNotEqual(gameList[1].id);
     });
 
-    xit('adding a second game does not overwrite first game', () => {
+    it('adding a second game does not overwrite first game', () => {
+      const game1 = { winner: 'X' };
+      const game2 = { winner: 'X' };
+      db.create(game1);
+      db.create(game2);
+
+      const gameList = JSON.parse(fs.readFileSync(testJsonFile));
+      expect(gameList[0]).toNotEqual(gameList[1]);
     });
 
-    xit('if winner field is not provided, game is not added and an error is returned', () => {
+    it('if winner field is not provided, game is not added and an error is returned', () => {
       // TODO: Practice test-driven development here. Currently the create function does
       // not return an error if the winner field is not provided. Follow the TDD approach:
       //   1. Write a test that tests that an error is returned if the "winner" field is not provided
       //   2. Run the tests and make sure your new test fails (since this feature doesn't exist yet)
       //   3. Add the functionality to create function in server/db/games.js to make your test pass
+      const game = {winners: 'xs'};
+      let test = db.create(game);
+      const gameList = JSON.parse(fs.readFileSync(testJsonFile));
+      expect(test instanceof Error).toEqual(true);
     });
 
-    xit('game has createdAt date for the current time', () => {
+    it('game has createdAt date for the current time', () => {
       // Hint: To test this in-depth, try mocking the date with Sinon.js
       // This way you can set a random date, create a new game in the database,
       // and then assert that the game in the database matches the date you set exactly!
+      let clock = sinon.useFakeTimers();
+      // console.log(clock.now.toISOString())
+      const game = {winner: 'X'};
+      let test = db.create(game);
+      console.log('test-> '+test.createdAt)
+
+      const gameList = JSON.parse(fs.readFileSync(testJsonFile));
+
+      expect(test.createdAt).toEqual(clock.Date().toISOString());
     });
   });
 
   // TODO: Unit test the #find and #drop functions
 
   describe('#find', () => {
-    xit('returns list of all games from the json file', () => {
+    it('returns list of all games from the json file', () => {
+      
     });
 
     xit('works of the list of games is empty', () => {
