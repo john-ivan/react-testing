@@ -77,6 +77,7 @@ describe('db unit tests', () => {
       const game = { winner: 'X' };
       const test = db.create(game);
       expect(test.createdAt).toEqual(clock.Date().toISOString());
+      clock.restore();
     });
   });
 

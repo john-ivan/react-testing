@@ -1,6 +1,7 @@
 const request = require('supertest');
 // Start server
 const app = require('../../');
+const appComponent = require('./../../src/components/App.js');
 
 const expect = require('expect');
 const db = require('../../server/db/games.js');
@@ -61,27 +62,57 @@ describe('Route integration', () => {
 
     describe('POST', () => {
       it('responds to valid request with 200 status and application/json content type', done => {
+        const game1 = { winner: 'X' };
+        // db.create(game1);
         request(HOST)
         .post('/games')
+        .send(game1)
+        .expect('Content-Type', /application\/json/)
+        .expect(200, done);
+      });
+
+      it('responds to a valid request with the item that was created in the DB', done => {
+        // const game1 = { winner: 'X' };
+        // let temp = db.create(game1);
+        // const gameList = JSON.parse(fs.readFileSync(testJsonFile));
+        // expect(gameList).toContain(temp);
+        // console.log(gameList);
+        // request(HOST)
+        // .post('/games')
+        // .send(temp)
         // .expect('Content-Type', /application\/json/)
-        // .expect(200)
+        // .expect(200, done);
+        const game1 = { winner: 'Z' };
+        let temp = db.create(game1);
+        const gameList = JSON.parse(fs.readFileSync(testJsonFile));
+
+        request(HOST)
+        .post('/games')
+        .send(temp)
         .then(response => {
-          console.log(response.statusCode);
-          console.log(response.body);
-          expect(response.statusCode).toEqual(200);
+          console.log(response.body,temp)
+          expect(response.body.winner).toEqual(temp.winner);
+          done();
         });
+
+        // .expect('Content-Type', /application\/json/)
+        // .expect(200, done);
+
       });
 
-      xit('responds to a valid request with the item that was created in the DB', done => {
-        // Hint: inspect the response body and make sure it contains the winner, createdAt, and
-        // id fields.
-      });
-
-      xit('responds to invalid request with 400 status and error message in body', done => {
+      it('responds to invalid request with 400 status and error message in body', done => {
         // This feature does not exist yet. Follow test-driven-development here! See description
         // in readme.
         // Hint: An invalid request is a POST request in which the POST body does not contain
         // a JSON object with a "winner" key, or if the body contains fields other than "winner"
+        request(HOST)
+        .post('/games')
+        .send({})
+        .then(response => {
+          console.log(response.statusCode)
+          expect
+          done();
+        });
       });
     });
   });
