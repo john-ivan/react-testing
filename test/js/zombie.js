@@ -31,15 +31,24 @@ describe('Front-end Integration/Features', () => {
 
     // TODO: Finish tests
 
-    xit('displays 3 rows', () => {
+    it('displays 3 rows', () => {
+      // console.log(browser.element('.row'))
+
+      browser.assert.elements('.row',3);
     });
 
-    xit('displays 9 squares', () => {
+    it('displays 9 squares', () => {
+      browser.assert.elements('.square',9)
     });
   });
 
   describe('Game logic', () => {
-    xit('clicking on square places an X in square', () => {
+    it('clicking on square places an X in square', () => {
+      let squares = browser.query('.square');
+      // browser.fire('click', squares, function(){
+      //   console.log('in fire')
+      // })
+      console.log(squares); 
     });
 
     xit('if X gets 3 in a row, victory message is displayed', () => {

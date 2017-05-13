@@ -90,7 +90,7 @@ describe('Route integration', () => {
         .post('/games')
         .send(temp)
         .then(response => {
-          console.log(response.body,temp)
+          // console.log(response.body,temp)
           expect(response.body.winner).toEqual(temp.winner);
           done();
         });
@@ -105,14 +105,30 @@ describe('Route integration', () => {
         // in readme.
         // Hint: An invalid request is a POST request in which the POST body does not contain
         // a JSON object with a "winner" key, or if the body contains fields other than "winner"
-        request(HOST)
-        .post('/games')
-        .send({})
-        .then(response => {
-          console.log(response.statusCode)
-          expect
+        const game1 = { };
+        let temp = db.create(game1);
+        const gameList = JSON.parse(fs.readFileSync(testJsonFile));
+
+        // request(HOST)
+        // .post('/games')
+        // .send(game1)
+        // .then(response => {
+        //   // console.log(response)
+        //   expect(response.statusCode).toEqual(400);
+        //   expect(response.body.error).toNotEqual(undefined);
+        //   done();
+        // });
+
+      request(HOST)
+      .post('/games')
+      .send({})
+      // .type('text')
+      .expect('Content-Type', /json/)
+      .expect(400)
+      .end(function(err, res) {
+          // console.log(res.error);
           done();
-        });
+      });
       });
     });
   });

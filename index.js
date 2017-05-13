@@ -15,10 +15,15 @@ app.get('/', (req, res) => {
 });
 
 app.post('/games', (req, res) => {
-  if (!req.body.winner) res.status(500).json({ error: 'Must send winner.' });
+  console.log('above block')
+  if (!req.body.winner) {
+    console.log('in block')
+    res.status(400).json({ error: 'Must send winner.'})
+};
   const game = db.create({
     winner: req.body.winner,
   });
+  // console.log(req);
   res.json(game);
 });
 
