@@ -20,18 +20,14 @@ const db = {};
  * @param {Object} game - The new game to be added to the DB
  * @return {Object} the game that was created
  */
-db.create =  game => {
-  if(game.winner===undefined){
-    let error = new Error('error')
-    return error;
+db.create = (game) => {
+  if (game.winner === undefined) {
+    return new Error('error');
   }
-  // return new Error();
-  // console.log(game);
   const newGame = Object.assign(game, {
     id: gamesList.length,
     createdAt: new Date().toISOString(),
   });
-  // if(!newGame[winner]) return new Error();
   gamesList.push(newGame);
   fs.writeFileSync(writeLocation, JSON.stringify(gamesList, null, 2));
   return gamesList.slice(-1)[0];

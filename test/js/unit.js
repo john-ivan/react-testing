@@ -61,12 +61,11 @@ describe('db unit tests', () => {
     it('if winner field is not provided, game is not added and an error is returned', () => {
       // TODO: Practice test-driven development here. Currently the create function does
       // not return an error if the winner field is not provided. Follow the TDD approach:
-      //   1. Write a test that tests that an error is returned if the "winner" field is not provided
-      //   2. Run the tests and make sure your new test fails (since this feature doesn't exist yet)
-      //   3. Add the functionality to create function in server/db/games.js to make your test pass
-      const game = {winners: 'xs'};
-      let test = db.create(game);
-      const gameList = JSON.parse(fs.readFileSync(testJsonFile));
+      //  1. Write a test that tests that an error is returned if the "winner" field is not provided
+      //  2. Run the tests and make sure your new test fails (since this feature doesn't exist yet)
+      //  3. Add the functionality to create function in server/db/games.js to make your test pass
+      const game = { winners: 'xs' };
+      const test = db.create(game);
       expect(test instanceof Error).toEqual(true);
     });
 
@@ -74,14 +73,9 @@ describe('db unit tests', () => {
       // Hint: To test this in-depth, try mocking the date with Sinon.js
       // This way you can set a random date, create a new game in the database,
       // and then assert that the game in the database matches the date you set exactly!
-      let clock = sinon.useFakeTimers();
-      // console.log(clock.now.toISOString())
-      const game = {winner: 'X'};
-      let test = db.create(game);
-      console.log('test-> '+test.createdAt)
-
-      const gameList = JSON.parse(fs.readFileSync(testJsonFile));
-
+      const clock = sinon.useFakeTimers();
+      const game = { winner: 'X' };
+      const test = db.create(game);
       expect(test.createdAt).toEqual(clock.Date().toISOString());
     });
   });
@@ -90,15 +84,28 @@ describe('db unit tests', () => {
 
   describe('#find', () => {
     it('returns list of all games from the json file', () => {
-      
+      const game = { winner: 'X' };
+      db.create(game);
+      const gameList = JSON.parse(fs.readFileSync(testJsonFile));
+      const tempList = db.find();
+      expect(gameList).toEqual(tempList);
     });
 
-    xit('works of the list of games is empty', () => {
+    it('works of the list of games is empty', () => {
+      const gameList = JSON.parse(fs.readFileSync(testJsonFile));
+      const tempList = db.find();
+      expect(gameList).toEqual(tempList);
     });
   });
 
   describe('#drop', () => {
-    xit('writes an empty array to the json file', () => {
+    it('writes an empty array to the json file', () => {
+      const game = { winner: 'X' };
+      db.create(game);
+      db.drop();
+      const gameList = JSON.parse(fs.readFileSync(testJsonFile));
+      expect(gameList.length).toEqual(0);
+      expect(gameList).toEqual([]);
     });
   });
 });

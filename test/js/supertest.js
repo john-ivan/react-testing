@@ -2,6 +2,12 @@ const request = require('supertest');
 // Start server
 const app = require('../../');
 
+const expect = require('expect');
+const db = require('../../server/db/games.js');
+const fs = require('fs');
+const path = require('path');
+const testJsonFile = path.join(__dirname, '../../server/db/games.test.json');
+
 const PORT = process.env.PORT || 3000;
 const HOST = `http://localhost:${PORT}`;
 
@@ -27,18 +33,43 @@ describe('Route integration', () => {
 
   describe('/games', () => {
     describe('GET', () => {
-      xit('response with 200 status and application/json content type', done => {
+      it('response with 200 status and application/json content type', done => {
+        request(HOST)
+        .get('/games')
+        .expect('Content-Type', /application\/json/)
+        .expect(200, done);
       });
 
-      xit('games from appropriate json file in server/db/ are in body of response', done => {
+      it('games from appropriate json file in server/db/ are in body of response', done => {
         // You'll need to inspect the body of the response and ensure it contains the games list.
         // Might need to read the games json file in first to make sure the games in the response
         // match the games in the database.
+        const game = { winner: 'X' };
+        db.create(game);
+        const game1 = { winner: 'X' };
+        db.create(game1);
+        request(HOST)
+        .get('/games')
+        .expect((res) => {
+          const gameList = JSON.parse(fs.readFileSync(testJsonFile));
+          return gameList === res.body;
+        })
+        .expect('Content-Type', /application\/json/)
+        .expect(200, done);
       });
     });
 
     describe('POST', () => {
-      xit('responds to valid request with 200 status and application/json content type', done => {
+      it('responds to valid request with 200 status and application/json content type', done => {
+        request(HOST)
+        .post('/games')
+        // .expect('Content-Type', /application\/json/)
+        // .expect(200)
+        .then(response => {
+          console.log(response.statusCode);
+          console.log(response.body);
+          expect(response.statusCode).toEqual(200);
+        });
       });
 
       xit('responds to a valid request with the item that was created in the DB', done => {
