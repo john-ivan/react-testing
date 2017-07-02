@@ -8,3 +8,4 @@ require('./js/unit');
 require('./js/supertest');
 require('./js/zombie');
 require('./js/enzyme');
+require('./js/test');
