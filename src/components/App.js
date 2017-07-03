@@ -144,6 +144,19 @@ class App extends Component {
   }
 }
 
+/* tapered */
 
+/*
+%g const React = require('react');
+%g import ReactTestUtils from 'react-dom/test-utils';
+%g import Square from '../../src/components/Square';
+%g import App from '../../src/components/App';
+%g import Row from '../../src/components/Row';
+%g import GameList from '../../src/components/GameList';
+%g import { shallow } from 'enzyme';
+*/
+
+// Enzyme is a wrapper around React test utilities which makes it easier to
+// shallow render and traverse the shallow rendered tree.
 
 export default App;

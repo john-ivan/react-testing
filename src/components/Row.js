@@ -19,4 +19,10 @@ Row.propTypes = {
   row: PropTypes.number.isRequired,
 };
 
+/*
+>>:x: row
+>>: const wrapper = shallow(<App />);
+>>:a: wrapper.find('Row').length === 3 equal true | row length
+*/
+
 export default Row;

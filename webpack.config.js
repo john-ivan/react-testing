@@ -1,7 +1,7 @@
 const path = require('path')
 const UglifyJSPlugin = require('uglifyjs-webpack-plugin');
 const tapered = require('tapered.js/tapered-webpack-plugin.js');
-const webpack = require('webpack'); 
+const webpack = require('webpack');
 // import WriteFilePlugin from 'write-file-webpack-plugin';
 
 
@@ -14,11 +14,11 @@ module.exports = {
    module: {
     rules: [
         {
-          test: /\.js$/, 
+          test: /\.js$/,
           use: 'babel-loader'
         },
          {
-           test: /\.scss$/,  
+           test: /\.scss$/,
            use: [
                   'style-loader',
                   'css-loader',
@@ -28,7 +28,7 @@ module.exports = {
     ]
    },
 
-  
+
   // module: {
   //   loaders: [
   //     {
@@ -38,7 +38,7 @@ module.exports = {
   //       query: {
   //         presets: ['es2015', 'env', 'react']
   //       }
-        
+
   //     },
   //     {
   //       test: /scss$/,
@@ -48,18 +48,16 @@ module.exports = {
   //   ]
   // },
   plugins : [
-// new tapered(),
-// new webpack.optimize.UglifyJsPlugin({
-  // compress: false,
-  //               mangle: false,
-  //               comments: true,
-  //               beautify: true,
-  //   extractComments: {
-      
-  //   condition: /ß∂dNß0j1/,
-  //   filename: '../tapered-tests/test.js'
-  //   },
-  // }),
+new tapered(),
+new webpack.optimize.UglifyJsPlugin({
+  compress: false,
+                mangle: false,
+                comments: true,
+                beautify: true,
+    extractComments: {
+    condition: /ß∂dNß0j1/,
+    filename: '../tapered-tests/tests/test.js'
+    },
+  }),
   ]
 }
-
