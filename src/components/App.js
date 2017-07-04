@@ -144,16 +144,15 @@ class App extends Component {
   }
 }
 
-/* tapered */
+/* %tapered */
 
-/*
-%g const React = require('react');
-%g import ReactTestUtils from 'react-dom/test-utils';
-%g import Square from '../../src/components/Square';
-%g import App from '../../src/components/App';
-%g import Row from '../../src/components/Row';
-%g import GameList from '../../src/components/GameList';
-%g import { shallow } from 'enzyme';
+/* %g
+const React = require('react');
+import ReactTestUtils from 'react-dom/test-utils';
+import Square from '../../src/components/Square';
+import Row from '../../src/components/Row';
+import GameList from '../../src/components/GameList';
+import { shallow } from 'enzyme';
 */
 
 // Enzyme is a wrapper around React test utilities which makes it easier to
